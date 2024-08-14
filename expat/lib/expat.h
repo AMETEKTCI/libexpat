@@ -51,6 +51,10 @@
 extern "C" {
 #endif
 
+#ifdef XP3i 	//add new projects here, they should be defined as a project macro. Do not define the project here.
+#define embedded
+#endif
+
 struct XML_ParserStruct;
 typedef struct XML_ParserStruct *XML_Parser;
 
