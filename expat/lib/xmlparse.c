@@ -68,6 +68,9 @@
 #ifdef XP3i
 #define XML_GE 0 //disable general entities for less memory consumption
 #endif
+#ifdef nVision2
+#define XML_GE 0 //disable general entities for less memory consumption
+#endif
 
 #if ! defined(XML_GE) || (1 - XML_GE - 1 == 2) || (XML_GE < 0) || (XML_GE > 1)
 #  error XML_GE (for general entities) must be defined, non-empty, either 1 or 0 (0 to disable, 1 to enable; 1 is a common default)
@@ -79,6 +82,9 @@
 
 
 #ifdef XP3i
+#define XML_CONTEXT_BYTES 0 //disable context bytes for less memory consumption
+#endif
+#ifdef nVision2
 #define XML_CONTEXT_BYTES 0 //disable context bytes for less memory consumption
 #endif
 
@@ -150,6 +156,9 @@
 #endif
 
 #ifdef XP3i
+#define XML_POOR_ENTROPY
+#endif
+#ifdef nVision2
 #define XML_POOR_ENTROPY
 #endif
 #if ! defined(HAVE_GETRANDOM) && ! defined(HAVE_SYSCALL_GETRANDOM)             \
@@ -991,6 +1000,10 @@ generate_hash_secret_salt(XML_Parser parser) {
   /* Process ID is 0 bits entropy if attacker has local access */
   entropy = gather_time_entropy() ^ getpid();
 #elif defined(XP3i)
+  unsigned int seed = time(NULL) % UINT_MAX;
+  srand(seed);
+  entropy =  rand();
+#elif defined(nVision2)
   unsigned int seed = time(NULL) % UINT_MAX;
   srand(seed);
   entropy =  rand();
