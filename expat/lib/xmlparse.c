@@ -1980,8 +1980,8 @@ XML_Parse(XML_Parser parser, const char *s, int len, int isFinal) {
 
 #if XML_CONTEXT_BYTES == 0
   if (parser->m_bufferPtr == parser->m_bufferEnd) {
-    const char *end;
-    int nLeftOver;
+    const char *end = NULL;
+    int nLeftOver = 0;
     enum XML_Status result;
     /* Detect overflow (a+b > MAX <==> b > MAX-a) */
     if ((XML_Size)len > ((XML_Size)-1) / 2 - parser->m_parseEndByteIndex) {
