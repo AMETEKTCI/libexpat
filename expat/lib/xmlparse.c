@@ -7055,8 +7055,14 @@ dtdCopy(XML_Parser oldParser, DTD *newDtd, const DTD *oldDtd,
     if (! newE)
       return 0;
     if (oldE->nDefaultAtts) {
+#ifdef XP3i
+    	if ((oldE->nDefaultAtts * sizeof(DEFAULT_ATTRIBUTE)) < INT_MAX)
+    		newE->defaultAtts
+				= ms->malloc_fcn(oldE->nDefaultAtts * sizeof(DEFAULT_ATTRIBUTE));
+#elif
       newE->defaultAtts
           = ms->malloc_fcn(oldE->nDefaultAtts * sizeof(DEFAULT_ATTRIBUTE));
+#endif
       if (! newE->defaultAtts) {
         return 0;
       }
