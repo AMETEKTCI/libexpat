@@ -2206,7 +2206,12 @@ XML_GetBuffer(XML_Parser parser, int len) {
         bufferSize = INIT_BUFFER_SIZE;
       do {
         /* Do not invoke signed arithmetic overflow: */
+#ifdef XP3i
+    	if (bufferSize < (INT_MAX / 2))
+    		bufferSize = 2 * bufferSize;
+#elif
         bufferSize = (int)(2U * (unsigned)bufferSize);
+#endif
       } while (bufferSize < neededSize && bufferSize > 0);
       if (bufferSize <= 0) {
         parser->m_errorCode = XML_ERROR_NO_MEMORY;
