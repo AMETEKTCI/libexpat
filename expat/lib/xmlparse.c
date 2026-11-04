@@ -2428,7 +2428,7 @@ xmlParse64(XML_Parser parser, const char *s, size_t len, XML_Bool isFinal) {
       s = empty;
     }
     const char *end = s + len;
-    size_t nLeftOver;
+    size_t nLeftOver = 0;
     enum XML_Status result;
     /* Detect overflow (a+b > MAX <==> b > MAX-a) */
     if ((uint64_t)len > UINT64_MAX - parser->m_parseEndByteIndex) {
